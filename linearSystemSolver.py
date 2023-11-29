@@ -45,6 +45,8 @@ def calculation(matrix, index):
     x = matrix[index][index]
     if x == 0:
         return calculation(matrix, index + 1)
+    else:
+        scaling(matrix, index, 1 / x)
     
     # make all other nunber at position column index to be zero
     for i in range (index+1, row):
@@ -54,8 +56,9 @@ def calculation(matrix, index):
         else:
             scaling(matrix, i, x / matrix[i][index])
             replacement(matrix, i, index)
-            print(matrix)
-    return 
+            
+    # move the iteration into the next step
+    return calculation(matrix, index + 1)
 
 calculation(matrix, 0)
 
