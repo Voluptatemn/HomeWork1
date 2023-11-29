@@ -26,9 +26,15 @@ def scaling(matrix, row, scale):
     matrix[row] *= scale
     return matrix
 
-matrix = np.array([[9, 3, 3, 3], [2, 2, 2, 4], [1, 1, 5, 5]])
-print(matrix)
+# matrix = np.array([[9, 3, 3, 3], [2, 2, 2, 4], [1, 1, 5, 5]])
+# print(matrix)
 # print(interchange(matrix, 0, 1))
+
+def generate_matrix(row, column, low, high):
+    return np.random.random_integers(low, high, (row, column))
+
+matrix = generate_matrix(3, 4, 0, 4)
+print(matrix)
 
 # rref 
 def calculation(matrix, index):
