@@ -26,7 +26,7 @@ def scaling(matrix, row, scale):
     matrix[row] *= scale
     return matrix
 
-matrix = np.array([[0, 3, 3, 3], [2, 2, 2, 4], [1, 1, 1, 5], [1, 2, 2, 3]])
+matrix = np.array([[0, 3, 3, 3], [2, 2, 2, 4], [1, 1, 5, 5]])
 print(matrix)
 # print(interchange(matrix, 0, 1))
 
