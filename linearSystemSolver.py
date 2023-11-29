@@ -26,14 +26,14 @@ def scaling(matrix, row, scale):
     matrix[row] *= scale
     return matrix
 
-matrix = np.array([[0, 3, 3, 3], [2, 2, 2, 4], [1, 1, 5, 5]])
+matrix = np.array([[9, 3, 3, 3], [2, 2, 2, 4], [1, 1, 5, 5]])
 print(matrix)
 # print(interchange(matrix, 0, 1))
 
+# rref 
 def calculation(matrix, index):
     
     row, column = matrix.shape
-    print(index)
     
     if index == column - 1:
         return matrix
@@ -42,7 +42,6 @@ def calculation(matrix, index):
     for i in range (index, row):
         if matrix[i][index] != 0:
             interchange(matrix, i, index)
-            print(matrix)
             break       
     
     # check if there is any row with a non-zero leading number
@@ -51,7 +50,6 @@ def calculation(matrix, index):
         return calculation(matrix, index + 1)
     else:
         scaling(matrix, index, 1 / x)
-        print(matrix)
     x = matrix[index][index] 
     
     # make all other nunber at position column index to be zero
@@ -61,16 +59,15 @@ def calculation(matrix, index):
             continue
         else:
             scaling(matrix, i, x / matrix[i][index])
-            print(matrix)
             replacement(matrix, i, index)
-            print(matrix)
             
     # move the iteration into the next step
     return calculation(matrix, index + 1)
 
 def initiate(matrix):
     matrix = np.asfarray(matrix)
-    return calculation(matrix, 0)
+    calculation(matrix, 0)
+    return matrix
 
 print(initiate(matrix))
 
