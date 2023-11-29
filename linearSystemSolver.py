@@ -13,7 +13,7 @@ def copy(array):
     return new_array
 
 def replacement(matrix, row1, row2):
-    matrix[row1] += matrix[row2]
+    matrix[row1] -= matrix[row2]
     return matrix
 
 def interchange(matrix, row1, row2):
@@ -26,11 +26,13 @@ def scaling(matrix, row, scale):
     matrix[row] *= scale
     return matrix
 
-matrix = np.array([[0, 3, 3, 3], [2, 2, 2, 4], [1, 1, 1, 5]])
+matrix = np.array([[0, 3, 3, 3], [2, 2, 2, 4], [1, 1, 1, 5], [1, 2, 2, 3]])
 print(matrix)
 # print(interchange(matrix, 0, 1))
 
 def calculation(matrix, index):
+    
+    matrix = np.asfarray(matrix)
     row, column = matrix.shape
     
     # loop through the row to move the row with non zero Xo to row o
@@ -40,14 +42,22 @@ def calculation(matrix, index):
             break       
     
     # check if there is any row with a non-zero leading number
-    if matrix[index][index] == 0:
+    x = matrix[index][index]
+    if x == 0:
         return calculation(matrix, index + 1)
     
-    
-    
-    
+    # make all other nunber at position column index to be zero
+    for i in range (index+1, row):
+        y = matrix[i][index]
+        if y == 0:
+            continue
+        else:
+            scaling(matrix, i, x / matrix[i][index])
+            replacement(matrix, i, index)
+            print(matrix)
     return 
 
 calculation(matrix, 0)
+
     
         
