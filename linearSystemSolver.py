@@ -33,6 +33,7 @@ print(matrix)
 def calculation(matrix, index):
     
     row, column = matrix.shape
+    print(index)
     
     if index == column - 1:
         return matrix
@@ -41,6 +42,7 @@ def calculation(matrix, index):
     for i in range (index, row):
         if matrix[i][index] != 0:
             interchange(matrix, i, index)
+            print(matrix)
             break       
     
     # check if there is any row with a non-zero leading number
@@ -49,6 +51,8 @@ def calculation(matrix, index):
         return calculation(matrix, index + 1)
     else:
         scaling(matrix, index, 1 / x)
+        print(matrix)
+    x = matrix[index][index] 
     
     # make all other nunber at position column index to be zero
     for i in range (index+1, row):
@@ -57,7 +61,9 @@ def calculation(matrix, index):
             continue
         else:
             scaling(matrix, i, x / matrix[i][index])
+            print(matrix)
             replacement(matrix, i, index)
+            print(matrix)
             
     # move the iteration into the next step
     return calculation(matrix, index + 1)
