@@ -32,8 +32,10 @@ print(matrix)
 
 def calculation(matrix, index):
     
-    matrix = np.asfarray(matrix)
     row, column = matrix.shape
+    
+    if index == column - 1:
+        return matrix
     
     # loop through the row to move the row with non zero Xo to row o
     for i in range (index, row):
@@ -60,7 +62,11 @@ def calculation(matrix, index):
     # move the iteration into the next step
     return calculation(matrix, index + 1)
 
-calculation(matrix, 0)
+def initiate(matrix):
+    matrix = np.asfarray(matrix)
+    return calculation(matrix, 0)
+
+print(initiate(matrix))
 
     
         
