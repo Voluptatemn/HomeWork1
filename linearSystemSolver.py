@@ -70,6 +70,8 @@ def calculation(matrix, index):
     # move the iteration into the next step
     return calculation(matrix, index + 1)
 
+
+
 def initiate(matrix):
     matrix = np.asfarray(matrix)
     calculation(matrix, 0)
