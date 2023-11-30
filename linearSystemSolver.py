@@ -68,8 +68,6 @@ def calculation(matrix, index):
     # move the iteration into the next step
     return calculation(matrix, index + 1)
 
-
-
 def allzero(row, consistency = 1):
     check = True
     for i in range (len(row) - consistency):
