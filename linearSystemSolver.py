@@ -34,9 +34,10 @@ def generate_matrix(row, column, low, high):
     return np.random.random_integers(low, high, (row, column))
 
 matrix = generate_matrix(3, 4, 0, 4)
+# matrix = [[0, 1, -4, 8], [2, -3, 2, 1], [4, -8, 12, 1]]
 print(matrix)
 
-# rref 
+# ef 
 def calculation(matrix, index):
     
     row, column = matrix.shape
@@ -54,9 +55,6 @@ def calculation(matrix, index):
     x = matrix[index][index]
     if x == 0:
         return calculation(matrix, index + 1)
-    else:
-        scaling(matrix, index, 1 / x)
-    x = matrix[index][index] 
     
     # make all other nunber at position column index to be zero
     for i in range (index+1, row):
@@ -70,9 +68,60 @@ def calculation(matrix, index):
     # move the iteration into the next step
     return calculation(matrix, index + 1)
 
+def allzero(row, consistency = 1):
+    check = True
+    for i in range (len(row) - consistency):
+        if row[i] != 0:
+            check = False
+            return check
+    return check
+
+def inconsistency(matrix):
+    row, column = matrix.shape
+    if allzero(matrix[row - 1]) and matrix[row - 1][column - 1] != 0:
+        return True
+    else:
+        return False
+    
+def leadingIndex(row):
+    for i in range(len(row)):
+        if row[i] != 0:
+            return i 
+    
+def rref(matrix, index):
+    
+    row, column = matrix.shape
+    
+    if index == row:
+        return matrix
+    
+    currow = row - index - 1
+    
+    if allzero(matrix[currow], consistency = 0):
+        return rref(matrix, index + 1)
+    
+    column_pos = leadingIndex(matrix[currow])
+    x = matrix[currow][column_pos]
+    scaling(matrix, currow, 1 / x)
+    
+    for i in range (currow):
+        y = matrix[i][column_pos]
+        if y == 0:
+            continue
+        else:
+            scaling(matrix, i, 1 / y)
+            replacement(matrix, i, currow)
+    
+    return rref(matrix, index + 1)
+
 def initiate(matrix):
     matrix = np.asfarray(matrix)
     calculation(matrix, 0)
+    print(matrix)
+    if inconsistency(matrix):
+        print("Inconsistent")
+    else:
+        rref(matrix, 0)
     return matrix
 
 print(initiate(matrix))
