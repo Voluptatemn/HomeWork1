@@ -119,7 +119,6 @@ def rref(matrix, index):
 def initiate(matrix):
     matrix = np.asfarray(matrix)
     ef(matrix, 0, 0)
-    print(matrix)
     if inconsistency(matrix):
         print("Inconsistent")
     else:
