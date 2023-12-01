@@ -33,40 +33,45 @@ def scaling(matrix, row, scale):
 def generate_matrix(row, column, low, high):
     return np.random.random_integers(low, high, (row, column))
 
-matrix = generate_matrix(3, 4, 0, 4)
-# matrix = [[1, 0, -5, 1], [0, 1, 1, 4], [0, 0, 0, 0]]
+
+matrix = [[0, 3, -6, 6, 4, -5], [3, -7, 8, -5, 8, 9], [3, -9, 12, -9, 6, 15]]
 print(matrix)
 
 # ef 
-def calculation(matrix, index):
+def ef(matrix, column_index, row_index):
     
     row, column = matrix.shape
     
-    if index == column - 1:
+    if column_index == column - 1:
         return matrix
     
-    # loop through the row to move the row with non zero Xo to row o
-    for i in range (index, row):
-        if matrix[i][index] != 0:
-            interchange(matrix, i, index)
-            break       
+    if row_index == row:
+        return matrix
     
-    # check if there is any row with a non-zero leading number
-    x = matrix[index][index]
-    if x == 0:
-        return calculation(matrix, index + 1)
+    # find the pivot, and interchange the pivot 
+    no_pivot = True
+    for i in range (row_index, row):
+        if matrix[i][column_index] != 0:
+            interchange(matrix, i, row_index)
+            no_pivot = False
+        
+    # if no pivot for the column, advance to the next column 
+    if no_pivot:
+        return ef(matrix, column_index + 1, row_index)
     
-    # make all other nunber at position column index to be zero
-    for i in range (index+1, row):
-        y = matrix[i][index]
+    # use row replacement to eliminate 
+    x = matrix[row_index][column_index]
+    for i in range (row_index + 1, row):
+        y = matrix[i][column_index]
         if y == 0:
             continue
         else:
-            scaling(matrix, i, x / matrix[i][index])
-            replacement(matrix, i, index)
-            
-    # move the iteration into the next step
-    return calculation(matrix, index + 1)
+            scaling(matrix, i, x / y)
+            replacement(matrix, i, row_index)
+    
+    # advance into next column, and next row
+    return ef(matrix, column_index + 1, row_index + 1)
+    
 
 def allzero(row, consistency = 1):
     check = True
@@ -116,7 +121,8 @@ def rref(matrix, index):
 
 def initiate(matrix):
     matrix = np.asfarray(matrix)
-    calculation(matrix, 0)
+    ef(matrix, 0, 0)
+    print(matrix)
     if inconsistency(matrix):
         print("Inconsistent")
     else:
