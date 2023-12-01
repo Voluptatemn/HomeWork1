@@ -34,7 +34,7 @@ def generate_matrix(row, column, low, high):
     return np.random.random_integers(low, high, (row, column))
 
 matrix = generate_matrix(3, 4, 0, 4)
-# matrix = [[0, 1, -4, 8], [2, -3, 2, 1], [4, -8, 12, 1]]
+# matrix = [[1, 0, -5, 1], [0, 1, 1, 4], [0, 0, 0, 0]]
 print(matrix)
 
 # ef 
@@ -117,7 +117,6 @@ def rref(matrix, index):
 def initiate(matrix):
     matrix = np.asfarray(matrix)
     calculation(matrix, 0)
-    print(matrix)
     if inconsistency(matrix):
         print("Inconsistent")
     else:
